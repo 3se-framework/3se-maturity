@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>3SE — Engineering Maturity Model</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink:          #0d1b2a;
+      --ink-mid:      #2e4057;
+      --ink-light:    #6b7f96;
+      --paper:        #f4f7fb;
+      --paper-warm:   #e8f0f9;
+      --accent:       #1a5faa;
+      --accent-light: #c8ddf2;
+      --rule:         #c5d5e8;
+      --white:        #ffffff;
+      --gain-bg:      #f0fdf4;
+      --gain-border:  #86efac;
+      --gain-text:    #166534;
+      --gain-num:     #bbf7d0;
+      --cons-bg:      #fff7ed;
+      --cons-border:  #fdba74;
+      --cons-text:    #9a3412;
+      --cons-num:     #fed7aa;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--paper);
+      color: var(--ink);
+      font-size: 17px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.2rem 4rem;
+      background: rgba(244, 247, 251, 0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--rule);
+      animation: fadeDown 0.6s ease both;
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+    .nav-links a {
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-mid);
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      padding-top: 80px;
+    }
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 8rem 4rem 8rem 4rem;
+      animation: fadeUp 0.8s 0.2s ease both;
+    }
+    .hero-eyebrow {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      display: inline-block;
+      width: 2rem;
+      height: 1px;
+      background: var(--accent);
+    }
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3.5rem, 6vw, 6rem);
+      font-weight: 900;
+      line-height: 1.0;
+      letter-spacing: -0.03em;
+      color: var(--ink);
+      margin-bottom: 1.2rem;
+    }
+    .hero-title .accent { color: var(--accent); }
+    .hero-tagline {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.4rem;
+      color: var(--ink-mid);
+      margin-bottom: 2rem;
+    }
+    .hero-desc {
+      font-size: 1rem;
+      color: var(--ink-mid);
+      max-width: 480px;
+      line-height: 1.8;
+      margin-bottom: 3rem;
+    }
+    .hero-cta {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .btn-primary {
+      display: inline-block;
+      padding: 0.9rem 2rem;
+      background: var(--accent);
+      color: var(--white);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .btn-primary:hover { background: #134d8c; transform: translateY(-2px); }
+    .btn-secondary {
+      display: inline-block;
+      padding: 0.9rem 2rem;
+      border: 1px solid var(--ink);
+      color: var(--ink);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: background 0.2s, color 0.2s, transform 0.2s;
+    }
+    .btn-secondary:hover { background: var(--ink); color: var(--white); transform: translateY(-2px); }
+
+    .hero-right {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--ink);
+      position: relative;
+      overflow: hidden;
+      animation: fadeIn 1s 0.4s ease both;
+    }
+    .hero-right::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 70% 30%, #0d2d52 0%, var(--ink) 70%);
+    }
+
+    /* Maturity ladder visual */
+    .maturity-visual {
+      position: relative;
+      z-index: 1;
+      padding: 3rem 3rem;
+      width: 100%;
+      max-width: 560px;
+    }
+    .ladder-stage {
+      display: flex;
+      align-items: center;
+      gap: 1.4rem;
+      padding: 1rem 1.4rem;
+      margin-bottom: 0.5rem;
+      border-left: 2px solid transparent;
+      transition: border-left-color 0.2s, background 0.2s;
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+      border-radius: 0 4px 4px 0;
+    }
+    .ladder-stage:hover {
+      border-left-color: #5b9bd5;
+      background: rgba(91,155,213,0.08);
+    }
+    .ladder-num {
+      font-family: 'DM', serif;
+      font-size: 2.4rem;
+      font-weight: 900;
+      color: var(--white);
+      min-width: 3rem;
+      line-height: 1;
+    }
+    .ladder-info { flex: 1; }
+    .ladder-badge {
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #5b9bd5;
+      margin-bottom: 3px;
+    }
+    .ladder-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: rgba(255,255,255,0.85);
+    }
+    .ladder-bar-wrap {
+      width: 100px;
+      height: 3px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .ladder-bar {
+      height: 100%;
+      background: #5b9bd5;
+      border-radius: 2px;
+      opacity: 0.7;
+    }
+
+    .hero-stat-bar {
+      position: absolute;
+      bottom: 3rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      display: flex;
+      gap: 3rem;
+    }
+    .hero-stat { text-align: center; }
+    .hero-stat-num {
+      font-family: 'DM', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--white);
+      display: block;
+    }
+    .hero-stat-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+    }
+
+    /* ── SECTION SHARED ── */
+    section { padding: 7rem 4rem; }
+    .section-inner { max-width: 1080px; margin: 0 auto; }
+    .section-label {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+    .section-label::before {
+      content: '';
+      display: inline-block;
+      width: 1.5rem;
+      height: 1px;
+      background: var(--accent);
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.5rem;
+    }
+    .section-lead {
+      font-size: 1.1rem;
+      color: var(--ink-mid);
+      max-width: 680px;
+      line-height: 1.8;
+    }
+    hr.rule {
+      border: none;
+      border-top: 1px solid var(--rule);
+      margin: 0;
+    }
+
+    /* ── STAGES SECTION ── */
+    .stages-section { background: var(--white); }
+
+    .stages-grid {
+      margin-top: 4rem;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid var(--rule);
+    }
+
+    /* Each stage row */
+    .stage-row {
+      display: grid;
+      grid-template-columns: 220px 1fr 1fr;
+      border-bottom: 1px solid var(--rule);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease, transform 0.5s ease, background 0.2s;
+    }
+    .stage-row.visible { opacity: 1; transform: translateY(0); }
+    .stage-row:last-child { border-bottom: none; }
+    .stage-row:hover { background: var(--paper); }
+
+    /* Meta column */
+    .stage-meta {
+      padding: 2.5rem;
+      border-right: 1px solid var(--rule);
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+    .stage-num {
+      font-family: 'DM', serif;
+      font-size: 3rem;
+      font-weight: 900;
+      color: var(--accent-light);
+      line-height: 1;
+    }
+    .stage-badge {
+      display: inline-block;
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      border: 1px solid var(--accent-light);
+      padding: 3px 10px;
+      width: fit-content;
+    }
+    .stage-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--ink);
+      line-height: 1.2;
+    }
+    .stage-version {
+      font-size: 0.8rem;
+      color: var(--ink-light);
+    }
+    .stage-headline {
+      font-size: 0.88rem;
+      color: var(--ink-mid);
+      font-style: italic;
+      margin-top: auto;
+      padding-top: 1rem;
+      line-height: 1.5;
+    }
+
+    /* Gains / consequences columns */
+    .stage-gains,
+    .stage-cons {
+      padding: 2.5rem;
+    }
+    .stage-gains { border-right: 1px solid var(--rule); }
+
+    .card-label {
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      margin-bottom: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .card-label::before {
+      content: '';
+      display: inline-block;
+      width: 1rem;
+      height: 1px;
+    }
+    .gains-label { color: var(--gain-text); }
+    .gains-label::before { background: var(--gain-text); }
+    .cons-label { color: var(--cons-text); }
+    .cons-label::before { background: var(--cons-text); }
+
+    .stage-gains ul,
+    .stage-cons ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+    .stage-gains ul li,
+    .stage-cons ul li {
+      font-size: 0.88rem;
+      line-height: 1.6;
+      padding-left: 1.2rem;
+      position: relative;
+    }
+    .stage-gains ul li { color: var(--gain-text); }
+    .stage-cons ul li { color: var(--cons-text); }
+    .stage-gains ul li::before {
+      content: '+';
+      position: absolute;
+      left: 0;
+      font-weight: 700;
+      color: var(--gain-border);
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+    .stage-cons ul li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      font-weight: 700;
+      color: var(--cons-border);
+      font-size: 0.75rem;
+      line-height: 1.8;
+    }
+    .stage-note {
+      font-size: 0.88rem;
+      font-style: italic;
+      line-height: 1.6;
+    }
+    .stage-gains .stage-note { color: var(--ink-light); }
+    .stage-cons .stage-note { color: var(--ink-light); }
+
+    /* ── PHILOSOPHY (dark) ── */
+    .philosophy-section { background: var(--ink); color: var(--white); }
+    .philosophy-section .section-title { color: var(--white); }
+    .philosophy-section .section-lead { color: rgba(255,255,255,0.6); }
+    .philosophy-section .section-label { color: #7ab8e8; }
+    .philosophy-section .section-label::before { background: #7ab8e8; }
+
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1px;
+      background: rgba(255,255,255,0.08);
+      margin-top: 4rem;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .value-card {
+      padding: 2.5rem;
+      background: var(--ink);
+      transition: background 0.2s;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.5s ease, transform 0.5s ease, background 0.2s;
+    }
+    .value-card.visible { opacity: 1; transform: translateY(0); }
+    .value-card:hover { background: #111f30; }
+    .value-over {
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+      margin-bottom: 0.5rem;
+    }
+    .value-primary {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 0.4rem;
+    }
+    .value-secondary {
+      font-size: 0.88rem;
+      color: rgba(255,255,255,0.4);
+    }
+
+    /* ── CTA ── */
+    .cta-section {
+      background: var(--paper-warm);
+      text-align: center;
+      padding: 8rem 4rem;
+    }
+    .cta-section .section-label { justify-content: center; }
+    .cta-section .section-title { margin: 1rem 0 1.5rem; }
+    .cta-section .section-lead { margin: 0 auto 3rem; }
+    .cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--ink);
+      color: rgba(255,255,255,0.4);
+      text-align: center;
+      padding: 2.5rem 4rem;
+      font-size: 0.82rem;
+      letter-spacing: 0.04em;
+    }
+    footer a { color: rgba(255,255,255,0.5); text-decoration: none; }
+    footer a:hover { color: var(--white); }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      .hero { grid-template-columns: 1fr; }
+      .hero-right { min-height: 340px; }
+      .hero-left { padding: 6rem 2rem 3rem; }
+      section { padding: 5rem 2rem; }
+      .stage-row { grid-template-columns: 1fr; }
+      .stage-gains { border-right: none; border-bottom: 1px solid var(--rule); }
+      .stage-meta { border-right: none; border-bottom: 1px solid var(--rule); }
+      .values-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">
+    <svg width="28" height="28" viewBox="0 0 340 340" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:inline-block;vertical-align:middle;margin-right:8px;">
+      <!-- Outer edges -->
+      <g stroke="#1a5faa" stroke-width="14" stroke-linejoin="round">
+        <line x1="170" y1="30" x2="50"  y2="270"/>
+        <line x1="170" y1="30" x2="290" y2="270"/>
+        <line x1="170" y1="30" x2="170" y2="220"/>
+        <line x1="50"  y1="270" x2="290" y2="270"/>
+        <line x1="50"  y1="270" x2="170" y2="220"/>
+        <line x1="290" y1="270" x2="170" y2="220"/>
+      </g>
+      <!-- Inner depth edges (dashed) -->
+      <g stroke="#1a5faa" stroke-width="8" stroke-dasharray="18 12" opacity="0.45">
+        <line x1="170" y1="148" x2="50"  y2="270"/>
+        <line x1="170" y1="148" x2="290" y2="270"/>
+        <line x1="170" y1="148" x2="170" y2="220"/>
+      </g>
+      <!-- Nodes -->
+      <circle cx="170" cy="30"  r="14" fill="#1a5faa"/>
+      <circle cx="50"  cy="270" r="10" fill="#1a5faa" opacity="0.7"/>
+      <circle cx="290" cy="270" r="10" fill="#1a5faa" opacity="0.7"/>
+      <circle cx="170" cy="220" r="10" fill="#1a5faa" opacity="0.7"/>
+    </svg>3<span>SE</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#why">Why 3SE</a></li>
+    <li><a href="#tetrahedron">Tetrahedron</a></li>
+    <li><a href="#contents">Contents</a></li>
+    <li><a href="#agile">Agile</a></li>
+    <li><a href="#cta">Get started</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-left">
+    <div class="hero-eyebrow">System · Safety · Security Engineering</div>
+    <h1 class="hero-title">Engineer<br>maturity<br>with <span class="accent">one model.</span></h1>
+    <p class="hero-tagline">From ad hoc to knowledge-driven.</p>
+    <p class="hero-desc">
+      A structured roadmap for organizations transitioning from unstructured engineering activities to fully integrated, continuously evolving practices — across system, safety, and security disciplines.
+    </p>
+    <div class="hero-cta">
+      <a href="#model" class="btn-primary">Discover the model</a>
+      <a href="https://www.3se.info" target="_blank" class="btn-secondary">Explore 3SE ↗</a>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <!-- Maturity ladder visual -->
+    <div class="maturity-visual">
+      <a href="#stage-1" class="ladder-stage">
+        <div class="ladder-num">01</div>
+        <div class="ladder-info">
+          <div class="ladder-badge">Engineering 0.0</div>
+          <div class="ladder-name">Ad hoc</div>
+        </div>
+        <div class="ladder-bar-wrap"><div class="ladder-bar" style="width:8%"></div></div>
+      </a>
+      <a href="#stage-2" class="ladder-stage">
+        <div class="ladder-num">02</div>
+        <div class="ladder-info">
+          <div class="ladder-badge">Engineering 1.0</div>
+          <div class="ladder-name">Document based</div>
+        </div>
+        <div class="ladder-bar-wrap"><div class="ladder-bar" style="width:25%"></div></div>
+      </a>
+      <a href="#stage-3" class="ladder-stage">
+        <div class="ladder-num">03</div>
+        <div class="ladder-info">
+          <div class="ladder-badge">Engineering 2.0</div>
+          <div class="ladder-name">Requirement based</div>
+        </div>
+        <div class="ladder-bar-wrap"><div class="ladder-bar" style="width:44%"></div></div>
+      </a>
+      <a href="#stage-4" class="ladder-stage">
+        <div class="ladder-num">04</div>
+        <div class="ladder-info">
+          <div class="ladder-badge">Engineering 3.0</div>
+          <div class="ladder-name">Model based</div>
+        </div>
+        <div class="ladder-bar-wrap"><div class="ladder-bar" style="width:62%"></div></div>
+      </a>
+      <a href="#stage-5" class="ladder-stage">
+        <div class="ladder-num">05</div>
+        <div class="ladder-info">
+          <div class="ladder-badge">Engineering 4.0</div>
+          <div class="ladder-name">Semantic based</div>
+        </div>
+        <div class="ladder-bar-wrap"><div class="ladder-bar" style="width:80%"></div></div>
+      </a>
+      <a href="#stage-6" class="ladder-stage">
+        <div class="ladder-num">06</div>
+        <div class="ladder-info">
+          <div class="ladder-badge">Engineering 5.0</div>
+          <div class="ladder-name">Knowledge based</div>
+        </div>
+        <div class="ladder-bar-wrap"><div class="ladder-bar" style="width:100%"></div></div>
+      </a>
+    </div>
+    <div class="hero-stat-bar">
+      <div class="hero-stat">
+        <span class="hero-stat-num">6</span>
+        <span class="hero-stat-label">Stages</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-num">3</span>
+        <span class="hero-stat-label">Disciplines</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-num">1</span>
+        <span class="hero-stat-label">Model</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="rule">
+
+<!-- STAGES -->
+<section class="stages-section" id="model">
+  <div class="section-inner">
+    <div class="section-label">The Model</div>
+    <h2 class="section-title">Six stages toward<br>integrated engineering.</h2>
+    <p class="section-lead">Each stage represents a meaningful shift in how organizations manage risk, integrate disciplines, and accumulate knowledge — with tangible business gains at every step.</p>
+
+    <div class="stages-grid">
+
+      <!-- Stage 1 -->
+      <div class="stage-row" id="stage-1">
+        <div class="stage-meta">
+          <div class="stage-num">01</div>
+          <div class="stage-badge">Engineering 0.0</div>
+          <div class="stage-name">Ad hoc</div>
+          <div class="stage-version">No formalized activities</div>
+          <div class="stage-headline">Decisions rely entirely on individuals. No shared understanding of risks, requirements, or boundaries.</div>
+        </div>
+        <div class="stage-gains">
+          <div class="card-label gains-label">Business Gains</div>
+          <p class="stage-note">None. This stage offers no sustainable competitive or compliance advantage.</p>
+        </div>
+        <div class="stage-cons">
+          <div class="card-label cons-label">Consequences of Staying</div>
+          <ul>
+            <li>Unpredictable project costs and schedules</li>
+            <li>Recurring defects discovered late</li>
+            <li>Inability to demonstrate compliance to stakeholders</li>
+			<li>Onboarding new engineers is slow</li>
+            <li>Knowledge walks out the door when people leave</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Stage 2 -->
+      <div class="stage-row" id="stage-2">
+        <div class="stage-meta">
+          <div class="stage-num">02</div>
+          <div class="stage-badge">Engineering 1.0</div>
+          <div class="stage-name">Document based</div>
+          <div class="stage-version">Document versioning &amp; baselining</div>
+          <div class="stage-headline">Engineering decisions and rationale become traceable through shared documents.</div>
+        </div>
+        <div class="stage-gains">
+          <div class="card-label gains-label">Business Gains</div>
+          <ul>
+			<li>Ability to demonstrate a baseline compliance to stakeholders</li>
+			<li>Decisions and rationale are traceable over time, reducing dependency on individual memory</li>
+			<li>Shared reference exists for teams to align on scope, requirements, and responsibilities</li>
+          </ul>
+        </div>
+        <div class="stage-cons">
+          <div class="card-label cons-label">Consequences of Staying</div>
+          <ul>
+            <li>Silent inconsistencies across specifications, safety analyses, and security assessments</li>
+            <li>Significant effort spent reconciling conflicting documents</li>
+            <li>Compliance demonstrations are labor-intensive and must largely be repeated for each project or variant</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Stage 3 -->
+      <div class="stage-row" id="stage-3">
+        <div class="stage-meta">
+          <div class="stage-num">03</div>
+          <div class="stage-badge">Engineering 2.0</div>
+          <div class="stage-name">Requirement based</div>
+          <div class="stage-version">Requirement versioning &amp; baselining</div>
+          <div class="stage-headline">Traceability within each discipline — but disciplines remain siloed, leading to risk opacity.</div>
+        </div>
+        <div class="stage-gains">
+          <div class="card-label gains-label">Business Gains</div>
+          <ul>
+            <li>Traceability within each discipline via ALM tools</li>
+            <li>Change impact analysis possible within a single discipline, reducing the risk of regressions</li>
+            <li>More structured compliance evidence for audits and certifications</li>
+          </ul>
+        </div>
+        <div class="stage-cons">
+          <div class="card-label cons-label">Consequences of Staying</div>
+          <ul>
+            <li>A system change may silently invalidate a safety or a security argument</li>
+            <li>Risk assessments produced in separate silos — no holistic picture</li>
+            <li>Late-stage integration issues remain common</li>
+			<li>Decision-makers lack visibility</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Stage 4 -->
+      <div class="stage-row" id="stage-4">
+        <div class="stage-meta">
+          <div class="stage-num">04</div>
+          <div class="stage-badge">Engineering 3.0</div>
+          <div class="stage-name">Model based</div>
+          <div class="stage-version">Model element versioning &amp; baselining</div>
+          <div class="stage-headline">Activities are integrated across disciplines — but inconsistent vocabularies preserve risk opacity.</div>
+        </div>
+        <div class="stage-gains">
+          <div class="card-label gains-label">Business Gains</div>
+          <ul>
+            <li>Models (SysML, AADL, STPA, TARA…) used consistently across disciplines</li>
+            <li>Earlier detection of cross-discipline issues</li>
+            <li>Simulation and automated analysis reduce cost of late design changes</li>
+            <li>Variants managed more efficiently through model reuse</li>
+          </ul>
+        </div>
+        <div class="stage-cons">
+          <div class="card-label cons-label">Consequences of Staying</div>
+          <ul>
+            <li>"Hazard", "threat", "failure mode" don't map to each other — risk can't be consolidated</li>
+            <li>Teams spend time translating between models rather than engineering</li>
+            <li>Automated consistency checks remain limited — the semantic foundation is missing</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Stage 5 -->
+      <div class="stage-row" id="stage-5">
+        <div class="stage-meta">
+          <div class="stage-num">05</div>
+          <div class="stage-badge">Engineering 4.0</div>
+          <div class="stage-name">Semantic based</div>
+          <div class="stage-version">Semantic versioning &amp; baselining</div>
+          <div class="stage-headline">One vocabulary across all disciplines enables truly risk-centric engineering.</div>
+        </div>
+        <div class="stage-gains">
+          <div class="card-label gains-label">Business Gains</div>
+          <ul>
+            <li>Unified, consistent reasoning about risk across all three disciplines</li>
+            <li>Faster and more productive cross-discipline reviews</li>
+            <li>Compliance artifacts generated more automatically from formally defined concepts</li>
+            <li>A single change propagates consistently — no more silent inconsistencies</li>
+          </ul>
+        </div>
+        <div class="stage-cons">
+          <div class="card-label cons-label">Consequences of Staying</div>
+          <ul>  
+            <li>Semantic foundation lives within programs — not the organization</li>
+            <li>Each new project must rebuild or rediscover parts of the knowledge base</li>
+            <li>Lessons learned don't accumulate — full engineering history is not leveraged</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Stage 6 -->
+      <div class="stage-row" id="stage-6">
+        <div class="stage-meta">
+          <div class="stage-num">06</div>
+          <div class="stage-badge">Engineering 5.0</div>
+          <div class="stage-name">Knowledge based</div>
+          <div class="stage-version">Facts &amp; rules versioning &amp; baselining</div>
+          <div class="stage-headline">Continuous integration of engineering knowledge at the organizational level.</div>
+        </div>
+        <div class="stage-gains">
+          <div class="card-label gains-label">Business Gains</div>
+          <ul>
+            <li>Validated engineering patterns reused across programs — fast ramp-up on new projects</li>
+            <li>New regulatory requirements integrated with minimal disruption</li>
+            <li>Lessons learned become a lasting organizational competitive advantage</li>
+            <li>AI-assisted engineering and automated compliance become achievable</li>
+            <li>The organization learns and improves beyond individual expert memory</li>
+          </ul>
+        </div>
+        <div class="stage-cons">
+          <div class="card-label cons-label">Consequences of Staying</div>
+          <p class="stage-note">This stage represents the current frontier of engineering maturity. No known business consequence of reaching it.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<hr class="rule">
+
+<!-- CTA -->
+<section class="cta-section" id="cta">
+  <div class="section-inner">
+    <div class="section-label" style="justify-content: center;">Get Started</div>
+    <h2 class="section-title">Ready to engineer<br>with one voice?</h2>
+    <p class="section-lead">
+      3SE is community-driven. Explore the framework, the language, and the tooling — and join the movement toward risk-centric integrative engineering.
+    </p>
+    <div class="cta-btns">
+      <a href="https://regis-casteran.gitbook.io/jarvis4se/" target="_blank" class="btn-primary">Explore JARVIS4SE ↗</a>
+      <a href="https://www.3se.info" target="_blank" class="btn-secondary">Back to 3SE</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2022 3SE — System, Safety & Security Engineering &nbsp;·&nbsp; <a href="https://www.3se.info/">www.3se.info</a></p>
+</footer>
+
+<script>
+  // Scroll-triggered reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), entry.target.dataset.delay || 0);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.stage-row, .value-card').forEach((el, i) => {
+    el.dataset.delay = (i % 3) * 100;
+    observer.observe(el);
+  });
+</script>
+
+</body>
+</html>

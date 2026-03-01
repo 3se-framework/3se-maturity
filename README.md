@@ -6,19 +6,19 @@ It consists of the following 6 stages:
 ---
 
 ## Stage 1 — Ad hoc (Engineering 0.0)
-
 The organization has no formalized activities in system engineering, safety engineering, or cybersecurity engineering.
 
-**Business gains of being here**
+> Decisions rely entirely on individuals. No shared understanding of risks, requirements, or boundaries.
+
+**Business gains**
 * None. This stage offers no sustainable competitive or compliance advantage.
 
-**Business consequences of staying here**
-* Engineering decisions rely on individual expertise and informal communication.
-* There is no shared understanding of risks, requirements, or system boundaries. This leads to:
-  * Unpredictable project costs and schedules
-  * Recurring defects that are discovered late
-  * Near-total inability to demonstrate compliance to customers or regulators
-* Onboarding new engineers is slow and knowledge walks out the door when people leave.
+**Consequences of staying**
+* Unpredictable project costs and schedules.
+* Recurring defects that are discovered late.
+* Inability to demonstrate compliance to stakeholders.
+* Onboarding new engineers is slow.
+* Knowledge walks out the door when people leave.
 
 ---
 
@@ -26,81 +26,98 @@ The organization has no formalized activities in system engineering, safety engi
 
 The organization has a description of activities in system engineering, safety engineering, or cybersecurity engineering that relies on document versioning and baselining.
 
-**Business gains of being here**
-* Ability to demonstrate a baseline level of compliance to customers or regulators.
-* Engineering decisions and rationale are traceable over time, reducing dependency on individual memory.
-* A shared reference exists for teams to align on scope, requirements, and responsibilities.
+> Engineering decisions and rationale become traceable through shared documents.
 
-**Business consequences of staying here**
-* Documents are notoriously hard to keep synchronized.
-* A change in one document rarely propagates correctly to related documents, creating silent inconsistencies between system specifications, safety analyses, and security assessments.
-* Teams spend significant effort in review meetings reconciling conflicting documents.
-* Compliance demonstrations are labor-intensive, and the effort must largely be repeated for each project or product variant.
+**Business gains**
+* Ability to demonstrate a baseline compliance to stakeholders.
+* Decisions and rationale are traceable over time, reducing dependency on individual memory.
+* Shared reference exists for teams to align on scope, requirements, and responsibilities.
+
+**Consequences of staying**
+* Silent inconsistencies between system specifications, safety analyses, and security assessments.
+* Significant effort spent reconciling conflicting documents.
+* Compliance demonstrations are labor-intensive and must largely be repeated for each project or variant.
 
 ---
 
 ## Stage 3 — Requirement based (Engineering 2.0)
 
-The organization has a description of activities in system engineering, safety engineering, or cybersecurity engineering based on requirement versioning and baselining. However, these engineering disciplines are not integrated together, leading to risk opacity.
+The organization has a description of activities in system engineering, safety engineering, or cybersecurity engineering based on requirement versioning and baselining. 
+However, these engineering disciplines are not integrated together, leading to risk opacity.
 
-**Business gains of being here**
-* Requirements management tools (such as DOORS or Polarion) provide traceability within each discipline.
-* Impact analysis of changes becomes possible within a single discipline, reducing the risk of regressions.
-* Compliance evidence is more structured and easier to produce for audits and certifications.
+> Traceability within each discipline — but disciplines remain siloed, leading to risk opacity.
 
-**Business consequences of staying here**
-* A change in a system requirement may invalidate a safety argument without anyone noticing.
-  * The links between system requirements, safety requirements, and security requirements remain informal or nonexistent.
-* Risk assessments from safety and security teams are produced in separate silos and cannot be easily consolidated into a holistic picture.
-  * This makes it difficult to answer the fundamental question: *are we building a safe and secure system?*
-* Decision-makers lack visibility, and late-stage integration issues remain common.
+**Business gains**
+* Traceability within each discipline via ALM tools.
+* Change impact analysis possible within a single discipline, reducing the risk of regressions.
+* More structured compliance evidence for audits and certifications.
+
+**Consequences of staying**
+* A system change may silently invalidate a safety or a security argument.
+* Risk assessments produced in separate silos — no holistic picture.
+* Late-stage integration issues remain common.
+* Decision-makers lack visibility.
 
 ---
 
 ## Stage 4 — Model based (Engineering 3.0)
 
-The organization has a description of activities in system engineering, safety engineering, or cybersecurity engineering based on model element versioning and baselining. Processes are integrated together at the level of activities, but lack consistency in vocabularies and taxonomies, leading to risk opacity.
+The organization has a description of activities in system engineering, safety engineering, or cybersecurity engineering based on model element versioning and baselining. 
+Processes are integrated together at the level of activities, but lack consistency in vocabularies and taxonomies, leading to risk opacity.
 
-**Business gains of being here**
-* Models (SysML, AADL, STPA, TARA, etc.) are used across disciplines.
-* Activities are noticeably more integrated, enabling earlier detection of cross-discipline issues.
-* Simulation and automated analysis become possible, reducing the cost of late design changes.
-* Product variants and configurations can be managed more efficiently through model reuse.
+> Activities are integrated across disciplines — but inconsistent vocabularies preserve risk opacity.
 
-**Business consequences of staying here**
-* Each discipline has its own modeling conventions, naming schemes, and risk taxonomies.
-  * A "hazard" in the safety model may not map cleanly to a "threat" in the security model, and neither may align clearly with a system "failure mode."
-  * This means risk cannot be consolidated and reasoned about as a whole.
+**Business gains**
+* Models (SysML, AADL, STPA, TARA...) are used across disciplines.
+* Earlier detection of cross-discipline issues.
+* Simulation and automated analysis reduce the cost of late design changes.
+* Variants and configurations managed more efficiently through model reuse.
+
+**Consequences of staying**
+* "Hazard", "threat", "failure mode" don't map to each other — risk can't be consolidated.
 * Teams spend time translating between models rather than engineering.
-* Automated consistency checks remain limited because the semantic foundation is missing.
+* Automated consistency checks remain limited — the semantic foundation is missing.
 
 ---
 
 ## Stage 5 — Semantic based (Engineering 4.0)
 
-The organization has a description of activities in system engineering, safety engineering, or cybersecurity engineering based on semantic versioning and baselining. Processes are integrated together at the level of vocabulary, leading to risk-centric engineering. However, knowledge is not yet managed at the organizational level.
+The organization has a description of activities in system engineering, safety engineering, or cybersecurity engineering based on semantic versioning and baselining. 
+Processes are integrated together at the level of vocabulary, leading to risk-centric engineering. However, knowledge is not yet managed at the organizational level.
 
-**Business gains of being here**
-* The organization can reason about risk in a unified, consistent way across system, safety, and security engineering.
-* Cross-discipline reviews become faster and more productive.
-* Compliance artifacts can be generated more automatically because concepts are formally defined and linked.
-* A single change propagates consistently across all disciplines, eliminating silent inconsistencies.
+> One vocabulary across all disciplines enables truly risk-centric engineering.
 
-**Business consequences of staying here**
-* This semantic foundation lives within individual programs or teams rather than being shared across the organization.
+**Business gains**
+* Unified, consistent reasoning about risk across all three disciplines.
+* Faster and more productive cross-discipline reviews.
+* Compliance artifacts generated more automatically from formally defined concepts.
+* A single change propagates consistently — no more silent inconsistencies.
+
+**Consequences of staying**
+* Semantic foundation lives within programs — not the organization.
 * Each new project must rebuild or rediscover parts of the knowledge base.
-* Lessons learned do not accumulate systematically.
-* The organization cannot yet leverage its full engineering history to make better decisions on future programs.
+* Lessons learned don't accumulate — full engineering history is not leveraged.
 
 ---
 
 ## Stage 6 — Knowledge based (Engineering 5.0)
 
-The organization has a description of activities in system engineering, safety engineering, or cybersecurity engineering based on knowledge facts and rules versioning and baselining. Processes are integrated together at the level of the organization's infrastructure, enabling continuous integration and deployment of new facts and rules.
+The organization has a description of activities in system engineering, safety engineering, or cybersecurity engineering based on knowledge facts and rules versioning and baselining. 
+Processes are integrated together at the level of the organization's infrastructure, enabling continuous integration and deployment of new facts and rules.
 
-**Business gains of being here**
-* Validated engineering patterns are reused across programs, significantly reducing ramp-up time on new projects.
-* New regulatory requirements or technological changes are integrated with minimal disruption, as the knowledge base evolves continuously.
-* Lessons learned are captured and deployed organizationally, turning experience into a lasting competitive advantage.
-* AI-assisted engineering and automated compliance become achievable, further reducing the cost and effort of certification.
-* The organization as a whole learns and improves, rather than relying solely on the memory and availability of individual experts.
+> Continuous integration of engineering knowledge at the organizational level.
+
+**Business gains**
+* Validated engineering patterns reused across programs - fast ramp-up on new projects.
+* New regulatory requirements integrated with minimal disruption.
+* Lessons learned become a lasting organizational competitive advantage.
+* AI-assisted engineering and automated compliance become achievable.
+* The organization learns and improves beyond individual expert memory.
+
+**Consequences of staying**
+This stage represents the current frontier of engineering maturity. No known business consequence of reaching it.
+
+---
+Copyright (c) 2022 Regis Casteran
+
+![CC_BY-NC-ND](https://www.3se.info/CC_BY-NC-ND.png)
