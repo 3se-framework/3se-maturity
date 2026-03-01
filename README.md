@@ -29,7 +29,7 @@ The organization has a description of activities in system engineering, safety e
 > Engineering decisions and rationale become traceable through shared documents.
 
 **Business gains**
-* Ability to demonstrate a baseline compliance to stakeholders.
+* Ability to demonstrate baseline compliance to stakeholders.
 * Decisions and rationale are traceable over time, reducing dependency on individual memory.
 * Shared reference exists for teams to align on scope, requirements, and responsibilities.
 
