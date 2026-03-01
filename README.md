@@ -103,7 +103,7 @@ Processes are integrated together at the level of the organization's infrastruct
 * The organization learns and improves beyond individual expert memory.
 
 **Consequences of staying**
-This stage represents the current frontier of engineering maturity. No known business consequence of reaching it.
+* This stage represents the current frontier of engineering maturity. No known business consequence of reaching it.
 
 ---
 Copyright (c) 2022 Regis Casteran
