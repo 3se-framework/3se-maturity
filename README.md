@@ -3,8 +3,6 @@
 The 3SE engineering maturity model provides organizations a roadmap to transition from unstructured system, safety and security engineering activities to fully integrated and continuously evolving engineering activities.
 It consists of the following 6 stages:
 
----
-
 ## Stage 1 — Ad hoc (Engineering 0.0)
 The organization has no formalized activities in system engineering, safety engineering, or cybersecurity engineering.
 
@@ -19,8 +17,6 @@ The organization has no formalized activities in system engineering, safety engi
 * Inability to demonstrate compliance to stakeholders.
 * Onboarding new engineers is slow.
 * Knowledge walks out the door when people leave.
-
----
 
 ## Stage 2 — Document based (Engineering 1.0)
 
@@ -37,8 +33,6 @@ The organization has a description of activities in system engineering, safety e
 * Silent inconsistencies between system specifications, safety analyses, and security assessments.
 * Significant effort spent reconciling conflicting documents.
 * Compliance demonstrations are labor-intensive and must largely be repeated for each project or variant.
-
----
 
 ## Stage 3 — Requirement based (Engineering 2.0)
 
@@ -58,8 +52,6 @@ However, these engineering disciplines are not integrated together, leading to r
 * Late-stage integration issues remain common.
 * Decision-makers lack visibility.
 
----
-
 ## Stage 4 — Model based (Engineering 3.0)
 
 The organization has a description of activities in system engineering, safety engineering, or cybersecurity engineering based on model element versioning and baselining. 
@@ -78,8 +70,6 @@ Processes are integrated together at the level of activities, but lack consisten
 * Teams spend time translating between models rather than engineering.
 * Automated consistency checks remain limited — the semantic foundation is missing.
 
----
-
 ## Stage 5 — Semantic based (Engineering 4.0)
 
 The organization has a description of activities in system engineering, safety engineering, or cybersecurity engineering based on semantic versioning and baselining. 
@@ -97,8 +87,6 @@ Processes are integrated together at the level of vocabulary, leading to risk-ce
 * Semantic foundation lives within programs — not the organization.
 * Each new project must rebuild or rediscover parts of the knowledge base.
 * Lessons learned don't accumulate — full engineering history is not leveraged.
-
----
 
 ## Stage 6 — Knowledge based (Engineering 5.0)
 
