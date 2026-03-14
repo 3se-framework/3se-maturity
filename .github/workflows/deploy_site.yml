@@ -20,11 +20,6 @@ jobs:
     steps:
       - uses: actions/checkout@v6.0.0
 
-      - uses: actions/setup-python@v6.2.0
-        with:
-          python-version: "3.12"
-          cache: pip
-
       - uses: actions/upload-pages-artifact@v3
         with:
           path: _site/
